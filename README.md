@@ -1,6 +1,6 @@
 # forgetmenot
 
-https://gdpr-info.eu/art-17-gdpr/
+General Data Protection Regulation ([GDPR](https://gdpr-info.eu/art-17-gdpr/)) states that users have *"the right to be forgotten"*. Blockchain will have none of this :fu:. This repo serves as a practical example of why you have to think twice when putting data on the blockchain. I will later expand on this idea to show how this property of blockchain could be leveraged to reduce transaction costs in smart-contracts.
 
 ## requirements to run this :sob:
 * A browser with [metamask](https://metamask.io/) (Chrome, Firefox, Opera or Brave)
@@ -73,4 +73,30 @@ When adding a new entry a Metamask popup will appear and ask you to confirm this
 
 ![forgetmenot](./README/metamask_pending.png?raw=true)
 
-## :unamused: why is this important 
+## :unamused: what is happening here?
+If you have a look at the *smart-contract* you will notice tow things. Firstly an event only stores a single key, value and two numbers. Secondly, only **1 / one / uno / een** of these are stored per account (address).
+
+```
+mapping (address => Entry) private addressToEntryMapping;
+```
+
+Every time you add a new entry, you override the old value. This is not entirely true, you are updating the current state of contract which will be included in the next block, but the "overrided" value was included in a previous block, which is immutable. SO we simply need to know where the change ocurred to fetch historic values. The `linkToPreviousBlock` variable is what helps us to go lookup the previous value.
+
+```
+function createEntry (string _key, string _value) public {
+
+ Entry storage entry = addressToEntryMapping[msg.sender];
+ entry.linkToPreviousBlock = entry.createdBlock;
+ entry.createdBlock = block.number;
+
+ entry.key = _key;
+ entry.value = _value;
+} 
+```
+
+:hand: You might think that this would not be possible with the link to the block in which the previous change ocurred, but this is not the case. The link simplifies the process, without it the code would simply have to to check block by block for changes to build the history. This would be painful, but not impossible.
+
+## :cool: related links
+* A bit more interesting way to read storage in Ethereum: https://medium.com/aigang-network/how-to-read-ethereum-contract-storage-44252c8af925
+* The right to be forgotten: https://gdpr-info.eu/art-17-gdpr/
+
