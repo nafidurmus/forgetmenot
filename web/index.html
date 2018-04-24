@@ -10,17 +10,16 @@
   <link href="css/bootstrap.min.css" rel="stylesheet">
 </head>
 
-<body ng-app="forgetmenot" ng-controller="controller">
+<body ng-app="forgetmenot" ng-controller="controller as ctrl">
   <div class="container">
     <div class="row">
       <div class="col-xs-12 col-sm-8 col-sm-push-2">
         <h1 class="text-center">forget me not</h1>
-        <span> web3 available: {{foundWeb3}} </span><br>
-        <span> coinbase: {{coinbase}} </span><br>
-        <span> balance: {{balanceCurrent}} </span><br>
-        <span> balance old: {{balancePrevious}} </span><br>
-        <span> diff: {{balancePrevious - balanceCurrent}} </span><br>
-        <button class="btn btn-default btn-adopt" type="button" data-id="0" ng-click="refresh()">REFRESH</button>
+        <span> web3 available: {{ctrl.foundWeb3}} </span><br>
+        <span> web3 version: {{ctrl.web3Version}} </span><br>
+        <span> coinbase: {{ctrl.coinbase}} </span><br>
+        <span> balance: {{ctrl.balance}} </span><br>
+        <button class="btn btn-default btn-adopt" type="button" data-id="0" ng-click="ctrl.refresh()">REFRESH</button>
         <hr/>
         <br/>
       </div>
@@ -39,15 +38,15 @@
             <strong>Value</strong><br>
             <textarea class="form-control" rows="5" maxlength="140" ng-model="newValue"></textarea><br/>
 
-            <button class="btn btn-default btn-adopt" type="button" data-id="0" ng-click="addEvent(newKey, newValue)">Add</button>
+            <button class="btn btn-default btn-adopt" type="button" data-id="0" ng-click="ctrl.addEvent(newKey, newValue)">Add</button>
           </div>
         </div>
       </div>
 
-      <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="event in events">
+      <div class="col-sm-6 col-md-4 col-lg-3" ng-repeat="event in ctrl.events">
         <div class="panel panel-default panel-pet">
           <div class="panel-heading">
-            <h3 class="panel-title">@BlockNumber {{event.createdBlock}}</h3>
+            <h3 class="panel-title">@BlockNumber {{event.createdBlock}} <span ng-if="event.latest">Latest</span> </h3>
           </div>
           <div class="panel-body">
             <strong>Key</strong>
