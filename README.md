@@ -1,5 +1,7 @@
 # forgetmenot
 
+**NOTE** Metamask 4.5.5 has a bug causing transactions to hang. I'm running v3.13.8 on Firefox and it works fine.  
+
 General Data Protection Regulation ([GDPR](https://gdpr-info.eu/art-17-gdpr/)) states that users have *"the right to be forgotten"*. Blockchain will have none of this. This repo serves as a practical example of why you have to think twice when putting data on the blockchain. I will later expand on this idea to show how this property of blockchain could be leveraged to reduce transaction costs in smart-contracts.
 
 ## requirements to run this :sob:
