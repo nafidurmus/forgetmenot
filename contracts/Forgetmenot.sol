@@ -22,6 +22,11 @@ contract Forgetmenot {
 	} 
 
 	function fetchEntry () public view returns (string, string, uint, uint) {
-		return (addressToEntryMapping[msg.sender].key, addressToEntryMapping[msg.sender].value, addressToEntryMapping[msg.sender].createdBlock, addressToEntryMapping[msg.sender].linkToPreviousBlock);
+		return (
+			addressToEntryMapping[msg.sender].key, 
+			addressToEntryMapping[msg.sender].value, 
+			addressToEntryMapping[msg.sender].createdBlock, 
+			addressToEntryMapping[msg.sender].linkToPreviousBlock
+		);
 	} 
 }
