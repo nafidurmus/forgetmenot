@@ -55,27 +55,17 @@
     // Methods
     function refresh() {
       ctrl.events = [];
-      __recursiveFetch(web3.eth.defaultBlock);
+      __recursiveFetch(0);
     }
 
-    function __recursiveFetch(block) {
+    function __recursiveFetch(index) {
 
-      fact.GetEventAtBlock(block)
+      console.log(`fetching at ${index}`);
+
+      fact.GetEventAtIndex(index)
         .then(event => {
-
-          if (event.createdBlock !== event.linkToPreviousBlock) {
-
-            if(block == web3.eth.defaultBlock) {
-              event.latest = true;
-            }
-
             ctrl.events.push(event);
-            
-            if (event.linkToPreviousBlock !== 0) {
-              __recursiveFetch(event.linkToPreviousBlock);
-            }
-
-          }
+            __recursiveFetch(++index);
         });
     }
 

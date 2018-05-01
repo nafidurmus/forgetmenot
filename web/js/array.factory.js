@@ -45,20 +45,20 @@
       return q.promise;
     }
 
-    function GetEventAtBlock(blocknumber) {
+    function GetEventAtIndex(index) {
 
       const q = $q.defer();
 
-      __contract.fetchEntry(undefined, undefined, blocknumber, (err, data) => {
+      __contract.fetchEntry(index, undefined, undefined, undefined, (err, data) => {
 
         if (err) {
-          console.log(`GetEventAtBlock Error ${blocknumber}`, err.message);
+          console.log(`GetEventAtIndex Error ${index}`, err.message);
           q.reject(err);
         }
 
-        console.log('GetEventAtBlock response', data);
+        console.log('GetEventAtIndex response', data);
 
-        q.resolve(Model(data[0], data[1], data[2].toNumber(), data[3].toNumber()));
+        q.resolve(Model(data[0], data[1]));
 
       });
 
@@ -114,7 +114,7 @@
     return {
       Model: Model,
       Init: Init,
-      GetEventAtBlock: GetEventAtBlock,
+      GetEventAtIndex: GetEventAtIndex,
       AddEvent: AddEvent,
       GetCoinbase: GetCoinbase,
       GetBalance: GetBalance
