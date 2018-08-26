@@ -4,6 +4,11 @@ contract('Forgetmenot Basics', async (accounts) => {
 
   var entryZeroCreatedBlock = 0;
 
+  function assertEventOfType (response, eventName, index) {
+    assert.equal(response.logs[index].event, eventName, eventName + ' event should fire.');
+  }
+
+
   it("should able to create a contract", async () => {
     let instance = await Forgetmenot.deployed();
 
@@ -27,6 +32,13 @@ contract('Forgetmenot Basics', async (accounts) => {
     assert.equal(entry.valueOf()[0], "surname");
     assert.equal(entry.valueOf()[1], "zietsman");
     assert.equal(entry.valueOf()[3].valueOf(), entryZeroCreatedBlock.valueOf());
+  })
+
+  it("should emit LogNewEntry", async () => {
+    let instance = await Forgetmenot.deployed();
+    var event = await instance.createEntry("name", "paul", { from: accounts[0] });
+
+    assertEventOfType(event, "LogNewEntry", 0);
   })
 
 })

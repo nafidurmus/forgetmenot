@@ -9,6 +9,8 @@ contract Forgetmenot {
 		uint linkToPreviousBlock;
 	}
 
+	event LogNewEntry (address _address);
+
 	mapping (address => Entry) private addressToEntryMapping; 
 
 	function createEntry (string _key, string _value) public {
@@ -19,6 +21,8 @@ contract Forgetmenot {
 
 		entry.key = _key;
 		entry.value = _value;
+
+		emit LogNewEntry(msg.sender);
 	} 
 
 	function fetchEntry () public view returns (string, string, uint, uint) {
